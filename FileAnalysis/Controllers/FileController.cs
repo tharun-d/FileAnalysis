@@ -21,7 +21,7 @@ namespace FileAnalysis.Controllers
             // string hi = UploadFileObj.InsertIntoDb("hi", "hi", "hi", "hi", "hi", "hi", "hi", "hi", "hi", "hi", "hi");
             return View();
         }
-        public ActionResult Test()
+        public ActionResult UploadingAll()
         {
             FileStream stream = new FileStream("C:\\hi\\hi.xlsx", FileMode.OpenOrCreate, FileAccess.Read);
             var reader = ExcelReaderFactory.CreateReader(stream);
@@ -56,9 +56,9 @@ namespace FileAnalysis.Controllers
                     con.Close();
                 }
             }
-            return View();
+            return RedirectToAction("GettingAll");
         }
-        public ActionResult Uploading()
+        public ActionResult Uploading()// used entity same output as UploadingAll
         {
             FileStream stream = new FileStream("C:\\hi\\hi.xlsx", FileMode.OpenOrCreate, FileAccess.Read);
             var reader = ExcelReaderFactory.CreateReader(stream);
@@ -99,7 +99,7 @@ namespace FileAnalysis.Controllers
             }
             return RedirectToAction("Getting");
         }
-        public ActionResult Getting()
+        public ActionResult Getting()// used entity same output as GettingAll
         {
             List<GettingDetailsOfFile> list = null;
             using (var ctx = new DbFileAnalysis())
@@ -124,6 +124,29 @@ namespace FileAnalysis.Controllers
             }
             return View(list);
         }
+        public ActionResult GettingAll()
+        {
+            List<GettingDetailsOfFile> list = new List<GettingDetailsOfFile>();
+
+            SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");
+            Connection.Open();
+            SqlCommand Command = new SqlCommand("GettingAll", Connection);
+            SqlDataReader DataReader = Command.ExecuteReader();
+            while (DataReader.Read())
+            {
+                GettingDetailsOfFile Obj = new GettingDetailsOfFile()
+                {
+                    EmployeeId = Convert.ToString(DataReader[0]),
+                    EmployeeName = Convert.ToString(DataReader[1]),
+                    ActDate = Convert.ToDateTime(DataReader[2]),
+                    HoursMentioned = Convert.ToDouble(DataReader[3])
+
+                };
+                list.Add(Obj);
+            }
+            Connection.Close();
+            return View(list);
+        }
         public class GettingDetailsOfFile
         {
             public string EmployeeId { get; set; }
@@ -140,7 +163,28 @@ namespace FileAnalysis.Controllers
             public double HoursMentioned { get; set; }
 
         }
-        
-           
+        public ActionResult DayWiseDetails()//total hours per day
+        {
+            List<GettingDetailsOfFile> list = new List<GettingDetailsOfFile>();
+
+            SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");
+            Connection.Open();
+            SqlCommand Command = new SqlCommand("daywisedetails", Connection);
+            SqlDataReader DataReader = Command.ExecuteReader();
+            while (DataReader.Read())
+            {
+                GettingDetailsOfFile Obj = new GettingDetailsOfFile()
+                {
+                    EmployeeId = Convert.ToString(DataReader[0]),
+                    EmployeeName=Convert.ToString(DataReader[1]),
+                    ActDate=Convert.ToDateTime(DataReader[2]),
+                    HoursMentioned=Convert.ToDouble(DataReader[3])
+
+                };
+                list.Add(Obj);
+            }
+            Connection.Close();
+            return View(list);
+        }       
     }
 }

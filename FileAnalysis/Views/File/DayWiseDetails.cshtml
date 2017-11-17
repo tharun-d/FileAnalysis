@@ -1,0 +1,39 @@
+﻿<table align="center">
+    <tr>
+        <th>
+            Employee Id
+        </th>
+        <th>
+            Employee Name
+        </th>
+        <th>
+            Date
+        </th>
+        <th>
+            Hours Filled
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td>
+                @item.EmployeeId
+            </td>
+            <td>
+                @item.EmployeeName
+            </td>
+            <td>
+                @item.ActDate
+            </td>
+            <td>
+                @item.HoursMentioned
+            </td>
+        </tr>
+
+    }
+
+
+</table>
+

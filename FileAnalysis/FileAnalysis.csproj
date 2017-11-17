@@ -200,6 +200,8 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\File\Getting.cshtml" />
+    <Content Include="Views\File\DayWiseDetails.cshtml" />
+    <Content Include="Views\File\GettingAll.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
