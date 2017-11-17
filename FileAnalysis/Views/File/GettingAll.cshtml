@@ -1,4 +1,4 @@
-﻿<table align="center">
+﻿<table align="center" border="1">
     <tr>
         <th>
             Employee Id
@@ -7,11 +7,33 @@
             Employee Name
         </th>
         <th>
-            Date
+            Act Date
         </th>
         <th>
-            Hours Filled
+            Ext Project
         </th>
+        <th>
+             External Project
+        </th>
+        <th>
+             Project
+        </th>
+        <th>
+             Wbs
+        </th>
+        <th>
+             Attribute
+        </th>
+        <th>
+             AA type
+        </th>
+        <th>
+            Project Type
+        </th>
+        <th>
+            Hours Mentioned
+        </th>
+
     </tr>
 
     @foreach (var item in Model)
@@ -28,8 +50,33 @@
                 @item.ActDate
             </td>
             <td>
+                @item.ExtProject
+            </td>
+            <td>
+                @item.Esnumber
+            </td>
+            <td>
+                @item.ExternalProject
+            </td>
+            <td>
+                @item.Project
+            </td>
+            <td>
+                @item.Wbs
+            </td>
+            <td>
+                @item.Attribute
+            </td>
+            <td>
+                @item.AAtype
+            </td>
+            <td>
+                @item.ProjectType
+            </td>
+            <td>
                 @item.HoursMentioned
             </td>
+            
         </tr>
 
     }

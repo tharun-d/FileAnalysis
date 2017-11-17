@@ -139,7 +139,15 @@ namespace FileAnalysis.Controllers
                     EmployeeId = Convert.ToString(DataReader[0]),
                     EmployeeName = Convert.ToString(DataReader[1]),
                     ActDate = Convert.ToDateTime(DataReader[2]),
-                    HoursMentioned = Convert.ToDouble(DataReader[3])
+                    ExtProject=Convert.ToString(DataReader[3]),
+                    Esnumber = Convert.ToString(DataReader[4]),
+                    ExternalProject = Convert.ToString(DataReader[5]),
+                    Project = Convert.ToString(DataReader[6]),
+                    Wbs = Convert.ToString(DataReader[7]),
+                    Attribute = Convert.ToString(DataReader[8]),
+                    AAtype = Convert.ToString(DataReader[9]),
+                    ProjectType = Convert.ToString(DataReader[10]),
+                    HoursMentioned = Convert.ToDouble(DataReader[11])
 
                 };
                 list.Add(Obj);
