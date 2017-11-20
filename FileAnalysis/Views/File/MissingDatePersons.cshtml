@@ -1,0 +1,31 @@
+﻿<table align="center" border="1">
+    <tr>
+        
+        <th>
+            Employee Name
+        </th>
+        <th>
+            Dates Not Filled
+        </th>
+        
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+        <tr>
+     
+            <td>
+                @item.EmployeeName
+            </td>
+            <td>
+                @item.DatesMissed
+            </td>
+           
+        </tr>
+
+    }
+
+
+</table>
+
