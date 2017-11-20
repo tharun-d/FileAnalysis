@@ -231,7 +231,7 @@ namespace FileAnalysis.Controllers
             SqlCommand Command = new SqlCommand("ClearAll", Connection);
             Command.ExecuteNonQuery();
             Connection.Close();
-            return View("Index");
+            return View("UploadToServer");
         }
         //public ActionResult UploadingAll()
         //{

@@ -32,8 +32,69 @@ group by ActDate,EmployeeName,EmployeeId
 order by EmployeeId
 end
 
+
 alter procedure GettingAll
 as begin
-select EmployeeId,EmployeeName,ActDate,HoursMentioned from DetailsOfFile
+select EmployeeId,EmployeeName,ActDate,ExtProject,Esnumber,ExternalProject,project,Wbs,Attribute,AAtype,ProjectType,HoursMentioned from DetailsOfFile
 order by EmployeeId
 end
+
+create procedure AllEmployeesNames as
+select distinct EmployeeName from DetailsOfFile
+order by EmployeeName
+
+alter procedure GettingMissedDates(@EmployeeName varchar(max))as
+begin
+select * from temp_table
+where num not in(
+select distinct RIGHT(cast(ActDate as date),2) from DetailsOfFile
+where EmployeeName=@EmployeeName)
+order by num
+end
+
+
+GettingMissedDates 'atul bansal'
+
+select actdate from detailsoffile
+
+create table temp_table
+(
+num int
+)
+
+delete from temp_table
+
+select * from temp_table
+insert into temp_table values(01)
+insert into temp_table values(02)
+insert into temp_table values(03)
+insert into temp_table values(04)
+insert into temp_table values(05)
+insert into temp_table values(06)
+insert into temp_table values(07)
+insert into temp_table values(08)
+insert into temp_table values(09)
+insert into temp_table values(10)
+insert into temp_table values(11)
+insert into temp_table values(12)
+insert into temp_table values(13)
+insert into temp_table values(14)
+insert into temp_table values(15)
+insert into temp_table values(16)
+insert into temp_table values(17)
+insert into temp_table values(18)
+insert into temp_table values(19)
+insert into temp_table values(20)
+insert into temp_table values(21)
+insert into temp_table values(22)
+insert into temp_table values(23)
+insert into temp_table values(24)
+insert into temp_table values(25)
+insert into temp_table values(26)
+insert into temp_table values(27)
+insert into temp_table values(28)
+insert into temp_table values(30)
+insert into temp_table values(31)
+
+create procedure clearall as
+delete from DetailsOfFile 
