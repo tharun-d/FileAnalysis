@@ -1,4 +1,7 @@
-﻿<script>
+﻿@{
+    ViewBag.Title = "Upload File";
+}
+<script>
         function validation() {
 
             var UploadedFile = document.getElementById("file").value;
@@ -39,7 +42,7 @@
 
 
 
-            <h2>Please browse the course to upload</h2>
+            <h2>Please browse the CATW File to Upload</h2>
 
             @Html.TextBox("file", "", new { id = "file", type = "file" }) <br />
 

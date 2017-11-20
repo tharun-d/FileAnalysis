@@ -337,7 +337,10 @@ namespace FileAnalysis.Controllers
         //    return View(list);
         //}
 
-
+        public  ActionResult Test()
+        {
+            return View();
+        }
 
 
     }

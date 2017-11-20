@@ -1,7 +1,11 @@
-﻿
+﻿@{
+    ViewBag.Title = "Getting All";
+}
+<script src="~/SearchBoxForTable.js"></script>
 <link href="~/TableStyle.css" rel="stylesheet" />
 <br />
-<table align="center" border="1">
+Filter By Name &nbsp;&nbsp;<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search Employee..." title="Type in a name" /><br /><br />
+<table align="center" border="1" id="myTable">
     <tr>
         <th>
             Employee Id

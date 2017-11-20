@@ -1,34 +1,41 @@
-﻿<link href="~/TableStyle.css" rel="stylesheet" />
+﻿@{
+    ViewBag.Title = "Missing Dates";
+}
+<script src="~/SearchBoxForTable.js"></script>
+
+<link href="~/TableStyle.css" rel="stylesheet" />
 <br />
 
-<table align="center" border="1">
-    <tr>
-        
-        <th>
-            Employee Name
-        </th>
-        <th>
-            Dates Not Filled
-        </th>
-        
-    </tr>
-
-    @foreach (var item in Model)
-    {
-
+Filter By Name &nbsp;&nbsp;<input type="text" id="myInput" onkeyup="myFunction1()" placeholder="Search Employee..." title="Type in a name" /><br /><br />
+<table align="center" border="1" id="myTable">
+    
         <tr>
-     
-            <td>
-                @item.EmployeeName
-            </td>
-            <td>
-                @item.DatesMissed
-            </td>
-           
+
+            <th>
+                Employee Name
+            </th>
+            <th>
+                Dates Not Filled
+            </th>
+
         </tr>
 
-    }
+        @foreach (var item in Model)
+        {
+
+            <tr>
+
+                <td>
+                    @item.EmployeeName
+                </td>
+                <td>
+                    @item.DatesMissed
+                </td>
+
+            </tr>
+
+        }
 
 
-</table>
+    </table>
 

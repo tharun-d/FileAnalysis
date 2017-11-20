@@ -185,6 +185,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="SearchBoxForTable.js" />
     <Content Include="TableStyle.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -205,6 +206,7 @@
     <Content Include="Views\File\GettingAll.cshtml" />
     <Content Include="Views\File\MissingDatePersons.cshtml" />
     <Content Include="Views\File\UploadToServer.cshtml" />
+    <Content Include="Views\File\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
