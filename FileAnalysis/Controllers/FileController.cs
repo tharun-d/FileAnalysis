@@ -61,7 +61,8 @@ namespace FileAnalysis.Controllers
                         reader.Read();
                         reader.Read();
                         reader.Read();
-                        SqlConnection con = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");
+                        // SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");
+                        SqlConnection con = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS; Initial Catalog = FileAnalysis; User ID = sa; Password = Passw0rd@12;");
                         while (reader.Read())
                         {
                             int i;
@@ -91,7 +92,8 @@ namespace FileAnalysis.Controllers
         {
             List<GettingDetailsOfFile> list = new List<GettingDetailsOfFile>();
 
-            SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");
+            // SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");
+            SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS; Initial Catalog = FileAnalysis; User ID = sa; Password = Passw0rd@12;");
             Connection.Open();
             SqlCommand Command = new SqlCommand("GettingAll", Connection);
             SqlDataReader DataReader = Command.ExecuteReader();
@@ -138,7 +140,8 @@ namespace FileAnalysis.Controllers
         {
             List<GettingDetailsOfFile> list = new List<GettingDetailsOfFile>();
 
-            SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");
+            // SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");
+            SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS; Initial Catalog = FileAnalysis; User ID = sa; Password = Passw0rd@12;");
             Connection.Open();
             SqlCommand Command = new SqlCommand("daywisedetails", Connection);
             SqlDataReader DataReader = Command.ExecuteReader();
@@ -172,7 +175,8 @@ namespace FileAnalysis.Controllers
         {
             List<GettingAllEmployees> list = new List<GettingAllEmployees>();
 
-            SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");
+            // SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");
+            SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS; Initial Catalog = FileAnalysis; User ID = sa; Password = Passw0rd@12;");
             Connection.Open();
             SqlCommand Command = new SqlCommand("AllEmployeesNames", Connection);
             SqlDataReader DataReader = Command.ExecuteReader();
@@ -226,7 +230,8 @@ namespace FileAnalysis.Controllers
         }
         public ActionResult ClearAll()
         {
-            SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");
+            // SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");
+            SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS; Initial Catalog = FileAnalysis; User ID = sa; Password = Passw0rd@12;");
             Connection.Open();
             SqlCommand Command = new SqlCommand("ClearAll", Connection);
             Command.ExecuteNonQuery();
