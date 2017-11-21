@@ -78,9 +78,83 @@ namespace FileAnalysis.Controllers
                             con.Close();
                         }
                     }
+                    MissingDates();
                 }
+
+
             }    
             return RedirectToAction("GettingAll");
+        }
+        public void MissingDates()//store missed catw dates in a catwmisseddates table
+        {
+            List<GettingAllEmployees> list = new List<GettingAllEmployees>();
+
+            // SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");
+            SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS; Initial Catalog = FileAnalysis; User ID = sa; Password = Passw0rd@12;");
+            Connection.Open();
+            SqlCommand Command = new SqlCommand("AllEmployeesNames", Connection);
+            SqlDataReader DataReader = Command.ExecuteReader();
+            while (DataReader.Read())
+            {
+                GettingAllEmployees obj = new GettingAllEmployees()
+                {
+                    EmployeeNumber = Convert.ToString(DataReader[0]),
+                    EmployeeName = Convert.ToString(DataReader[1])
+                };
+                list.Add(obj);
+            }
+            Connection.Close();
+            List<MissingPersons> list1 = new List<MissingPersons>();
+            foreach (var item in list)
+            {
+
+                string MissedDates = null;
+                int loop = 0;//to remove last comma(,)
+                Connection.Open();
+                SqlCommand Command1 = new SqlCommand("GettingMissedDates @EmployeeName", Connection);
+                Command1.Parameters.AddWithValue("@EmployeeName", item.EmployeeName);
+                SqlDataReader DataReader1 = Command1.ExecuteReader();
+                while (DataReader1.Read())
+                {
+                    if (loop == 0)
+                    {
+                        MissedDates += Convert.ToInt16(DataReader1[0]);
+                        loop++;
+                    }
+                    else
+                    {
+                        MissedDates = MissedDates + ",";
+                        MissedDates += Convert.ToInt16(DataReader1[0]);
+                    }
+
+                }
+                
+                if (MissedDates != null)
+                {
+                    MissingPersons MissedPersonsObj = new MissingPersons()
+                    {
+                        EmployeeNumber = item.EmployeeNumber,
+                        EmployeeName = item.EmployeeName,
+                        DatesMissed = MissedDates
+
+                    };
+                    list1.Add(MissedPersonsObj);
+                    MissedDates = null;
+                }
+                Connection.Close();
+            }
+            foreach (var item in list1)
+            {
+                int i;
+                Connection.Open();
+                SqlCommand Command2 = new SqlCommand("insertintocatwmisseddates @EmployeeNumber,@EmployeeName,@CATWMissedDates",Connection);
+                Command2.Parameters.AddWithValue("@EmployeeNumber", item.EmployeeNumber);
+                Command2.Parameters.AddWithValue("@EmployeeName", item.EmployeeName);
+                Command2.Parameters.AddWithValue("@CATWMissedDates", item.DatesMissed);
+                i = Command2.ExecuteNonQuery();
+                Connection.Close();
+            }
+
         }
         public ActionResult GettingAll()
         {
@@ -156,71 +230,39 @@ namespace FileAnalysis.Controllers
         }
         public class GettingAllEmployees
         {
+            public string EmployeeNumber { get; set; }
             public string EmployeeName { get; set; }
 
         }
         public class MissingPersons
         {
+            public string EmployeeNumber { get; set; }
             public string EmployeeName { get; set; }
             public string DatesMissed { get; set; }
         }
 
         public ActionResult MissingDatePersons()
         {
-            List<GettingAllEmployees> list = new List<GettingAllEmployees>();
 
+            List<MissingPersons> list = new List<MissingPersons>();
             // SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");
             SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS; Initial Catalog = FileAnalysis; User ID = sa; Password = Passw0rd@12;");
             Connection.Open();
-            SqlCommand Command = new SqlCommand("AllEmployeesNames", Connection);
+            SqlCommand Command = new SqlCommand("GettingPPMMissedDates", Connection);
             SqlDataReader DataReader = Command.ExecuteReader();
             while (DataReader.Read())
             {
-                GettingAllEmployees obj = new GettingAllEmployees()
+                MissingPersons obj = new MissingPersons()
                 {
-                    EmployeeName = Convert.ToString(DataReader[0])
+                    EmployeeNumber = Convert.ToString(DataReader[0]),
+                    EmployeeName = Convert.ToString(DataReader[1]),
+                    DatesMissed = Convert.ToString(DataReader[2])
+
                 };
                 list.Add(obj);
-            }
-            Connection.Close();
-            List<MissingPersons> list1 = new List<MissingPersons>();
-            foreach (var item in list)
-            {
-                string Name = item.EmployeeName;
-                string MissedDates = null;
-                int loop = 0;//to remove last comma(,)
-                Connection.Open();
-                SqlCommand Command1 = new SqlCommand("GettingMissedDates @EmployeeName", Connection);
-                Command1.Parameters.AddWithValue("@EmployeeName", Name);
-                SqlDataReader DataReader1 = Command1.ExecuteReader();
-                while (DataReader1.Read())
-                {
-                    if (loop == 0)
-                    {
-                        MissedDates += Convert.ToInt16(DataReader1[0]);
-                        loop++;
-                    }
-                    else
-                    {
-                        MissedDates = MissedDates + ",";
-                        MissedDates += Convert.ToInt16(DataReader1[0]);
-                    }
 
-                }
-                if (MissedDates != null)
-                {
-                    MissingPersons MissedPersonsObj = new MissingPersons()
-                    {
-                        EmployeeName = Name,
-                        DatesMissed = MissedDates,
-
-                    };
-                    list1.Add(MissedPersonsObj);
-                    MissedDates = null;
-                }
-                Connection.Close();
             }
-            return View(list1);
+            return View(list);
         }
         public ActionResult ClearAll()
         {

@@ -1,0 +1,34 @@
+﻿@model IEnumerable<FileAnalysis.Models.MissingPersons>
+
+@{
+    ViewBag.Title = "Missing Date Persons";
+    Layout = "~/Views/Shared/_LayoutPageForPPM.cshtml";
+}
+<script src="~/SearchBoxForTable.js"></script>
+<link href="~/TableStyle.css" rel="stylesheet" />
+
+<br /><br />
+<table align="center" border="1" id="myTable">
+    <tr>
+        <th>
+            Resource Name
+        </th>    
+        <th>
+            Dates Missed
+        </th>
+        
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ResourceName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DatesMissed)
+        </td>
+       
+    </tr>
+}
+
+</table>

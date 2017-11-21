@@ -214,6 +214,7 @@
     <Content Include="Views\PPM\UploadToServer.cshtml" />
     <Content Include="Views\PPM\GettingAll.cshtml" />
     <Content Include="Views\PPM\DayWiseDetails.cshtml" />
+    <Content Include="Views\PPM\MissingDatePersons.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

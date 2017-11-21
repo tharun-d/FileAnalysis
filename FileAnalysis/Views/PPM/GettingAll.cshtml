@@ -1,172 +1,172 @@
 ﻿@model IEnumerable<FileAnalysis.Models.GettingDetailsOfFile>
 
 @{
-    ViewBag.Title = "GettingAll";
+    ViewBag.Title = "Getting All";
     Layout = "~/Views/Shared/_LayoutPageForPPM.cshtml";
 }
 <link href="~/TableStyle.css" rel="stylesheet" />
-
 <br /><br />
 
-<table align="center" border="1">
-    <tr>
-        <th>
-           Project Number
-        </th>
-        <th>
-            Project Name
-        </th>
-        <th>
-            Resource Number
-        </th>
-        <th>
-            Resource Name
-        </th>
-        <th>
-            Task Name
-        </th>
-        <th>
-            Summary
-        </th>
-        <th>
-            Date Mentioned
-        </th>
-        <th>
-            Hours Mentioned
-        </th>
-        <th>
-            Resource Role
-        </th>
-        <th>
-            Type
-        </th>
-        <th>
-            Billing Code
-        </th>
-        <th>
-            Resource Hourly Rate
-        </th>
-        <th>
-            Programee Project Manager
-        </th>
-        <th>
-            Afe Descrimination
-        </th>
-        <th>
-            Programee Group
-        </th>
-        <th>
-            Programee
-        </th>
-        <th>
-            Programee Manager
-        </th>
-        <th>
-            Bussiness Lead
-        </th>
-        <th>
-            UAVP
-        </th>
-        <th>
-            ITSA Building Category
-        </th>
-        <th>
-            Funding Category
-        </th>
-        <th>
-            AFE Number
-        </th>
-        <th>
-            Service Category
-        </th>
-        <th>
-            BillingRate OnShore
-        </th>
-        <th>
-            BillingRate OffShore
-        </th>
-        
-    </tr>
+<table align="center" border="1" id="myTable">
+        <tr>
+            <th>
+                Project Number
+            </th>
+            <th>
+                Project Name
+            </th>
+            <th>
+                Resource Number
+            </th>
+            <th>
+                Resource Name
+            </th>
+            <th>
+                Task Name
+            </th>
+            <th>
+                Summary
+            </th>
+            <th>
+                Date Mentioned
+            </th>
+            <th>
+                Hours Mentioned
+            </th>
+            <th>
+                Resource Role
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Billing Code
+            </th>
+            <th>
+                Resource Hourly Rate
+            </th>
+            <th>
+                Programee Project Manager
+            </th>
+            <th>
+                Afe Descrimination
+            </th>
+            <th>
+                Programee Group
+            </th>
+            <th>
+                Programee
+            </th>
+            <th>
+                Programee Manager
+            </th>
+            <th>
+                Bussiness Lead
+            </th>
+            <th>
+                UAVP
+            </th>
+            <th>
+                ITSA Building Category
+            </th>
+            <th>
+                Funding Category
+            </th>
+            <th>
+                AFE Number
+            </th>
+            <th>
+                Service Category
+            </th>
+            <th>
+                BillingRate OnShore
+            </th>
+            <th>
+                BillingRate OffShore
+            </th>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProjectNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProjectName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ResourceNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ResourceName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TaskName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Summary)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateMentioned)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HoursMentioned)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ResourceRole)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ResourceType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BillingCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ResourceHourlyRate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProgrameeProjectManager)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AfeDescrimination)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProgrameeGroup)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Programee)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProgrameeManager)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BussinessLead)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UAVP)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ITSABuildingCategory)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FundingCategory)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AFENumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ServiceCategory)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BillingRateOnShore)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BillingRateOffShore)
-        </td>
-        
-    </tr>
-}
+        </tr>
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ResourceNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ResourceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Summary)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateMentioned)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HoursMentioned)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ResourceRole)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ResourceType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BillingCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ResourceHourlyRate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProgrameeProjectManager)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AfeDescrimination)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProgrameeGroup)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Programee)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProgrameeManager)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BussinessLead)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UAVP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ITSABuildingCategory)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FundingCategory)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AFENumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceCategory)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BillingRateOnShore)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BillingRateOffShore)
+                </td>
+
+            </tr>
+        }
+
+    </table>

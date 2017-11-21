@@ -93,39 +93,84 @@ namespace FileAnalysis.Controllers
                             con.Close();
                         }
                     }
+                    MissingDates();
                 }
             }
             return RedirectToAction("GettingAll");
         }
-        //public class GettingDetailsOfFile
-        //{
-        //    public string ProjectNumber { get; set; }
-        //    public string ProjectName { get; set; }
-        //    public string ResourceNumber { get; set; }
-        //    public string ResourceName { get; set; }
-        //    public string TaskName { get; set; }
-        //    public string Summary { get; set; }
-        //    public DateTime DateMentioned { get; set; }
-        //    public double HoursMentioned { get; set; }
-        //    public string ResourceRole { get; set; }
-        //    public string ResourceType { get; set; }
-        //    public string BillingCode { get; set; }
-        //    public double ResourceHourlyRate { get; set; }
-        //    public string ProgrameeProjectManager { get; set; }
-        //    public string AfeDescrimination { get; set; }
-        //    public string ProgrameeGroup { get; set; }
-        //    public string Programee { get; set; }
-        //    public string ProgrameeManager { get; set; }
-        //    public string BussinessLead { get; set; }
-        //    public string UAVP { get; set; }
-        //    public string ITSABuildingCategory { get; set; }
-        //    public string FundingCategory { get; set; }
-        //    public string AFENumber { get; set; }
-        //    public string ServiceCategory { get; set; }
-        //    public string BillingRateOnShore { get; set; }
-        //    public string BillingRateOffShore { get; set; }
+        public void MissingDates()//store missed ppm dates in a ppmmisseddates table
+        {
+            List<GettingAllEmployees> list = new List<GettingAllEmployees>();
 
-        //}
+            // SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");
+            SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS; Initial Catalog = FileAnalysis; User ID = sa; Password = Passw0rd@12;");
+            Connection.Open();
+            SqlCommand Command = new SqlCommand("PPMAllEmployeesNames", Connection);
+            SqlDataReader DataReader = Command.ExecuteReader();
+            while (DataReader.Read())
+            {
+                GettingAllEmployees obj = new GettingAllEmployees()
+                {
+                    ResourceNumber = Convert.ToString(DataReader[0]),
+                    ResourceName = Convert.ToString(DataReader[1])
+                };
+                list.Add(obj);
+            }
+            Connection.Close();
+            List<MissingPersons> list1 = new List<MissingPersons>();
+            foreach (var item in list)
+            {
+                
+                string MissedDates = null;
+                int loop = 0;//to remove last comma(,)
+                Connection.Open();
+                SqlCommand Command1 = new SqlCommand("PPMGettingMissedDates @ResourceName", Connection);
+                Command1.Parameters.AddWithValue("@ResourceName", item.ResourceName);
+                SqlDataReader DataReader1 = Command1.ExecuteReader();
+                while (DataReader1.Read())
+                {
+                    if (loop == 0)
+                    {
+                        MissedDates += Convert.ToInt16(DataReader1[0]);
+                        loop++;
+                    }
+                    else
+                    {
+                        MissedDates = MissedDates + ",";
+                        MissedDates += Convert.ToInt16(DataReader1[0]);
+                    }
+
+                }
+                if (MissedDates != null)
+                {
+                    MissingPersons MissedPersonsObj = new MissingPersons()
+                    {
+                        ResourceNumber=item.ResourceNumber,
+                        ResourceName = item.ResourceName,
+                        DatesMissed = MissedDates,
+
+                    };
+                    list1.Add(MissedPersonsObj);
+                    MissedDates = null;
+                }
+                Connection.Close();
+            }
+            foreach (var item in list1)
+            {
+                int i;
+                Connection.Open();
+                SqlCommand Command2 = new SqlCommand("insertintoppmmisseddates @EmployeeNumber,@EmployeeName,@CATWMissedDates", Connection);
+                Command2.Parameters.AddWithValue("@EmployeeNumber", item.ResourceNumber);
+                Command2.Parameters.AddWithValue("@EmployeeName", item.ResourceName);
+                Command2.Parameters.AddWithValue("@CATWMissedDates", item.DatesMissed);
+                i = Command2.ExecuteNonQuery();
+                Connection.Close();
+            }
+
+        }
+
+
+
         public  ActionResult GettingAll()
         {
             List<GettingDetailsOfFile> list = new List<GettingDetailsOfFile>();
@@ -195,7 +240,29 @@ namespace FileAnalysis.Controllers
             Connection.Close();
             return View(list);
         }
+        public ActionResult MissingDatePersons()
+        {
+            
+            List<MissingPersons> list = new List<MissingPersons>();
+            // SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");
+            SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS; Initial Catalog = FileAnalysis; User ID = sa; Password = Passw0rd@12;");
+            Connection.Open();
+            SqlCommand Command = new SqlCommand("GettingPPMMissedDates", Connection);
+            SqlDataReader DataReader = Command.ExecuteReader();
+            while (DataReader.Read())
+            {
+                MissingPersons obj = new MissingPersons()
+                {
+                    ResourceNumber=Convert.ToString(DataReader[0]),
+                    ResourceName=Convert.ToString(DataReader[1]),
+                    DatesMissed=Convert.ToString(DataReader[2])
 
+                };
+                list.Add(obj);
+
+            }
+            return View(list);
+        }
         public ActionResult ClearAll()
         {
             // SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");

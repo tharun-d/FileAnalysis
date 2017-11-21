@@ -36,11 +36,13 @@ namespace FileAnalysis.Models
     }
     public class GettingAllEmployees
     {
+        public string ResourceNumber { get; set; }
         public string ResourceName { get; set; }
 
     }
     public class MissingPersons
     {
+        public string ResourceNumber { get; set; }
         public string ResourceName { get; set; }
         public string DatesMissed { get; set; }
     }

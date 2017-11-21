@@ -39,9 +39,9 @@ select EmployeeId,EmployeeName,cast(ActDate as date),ExtProject,Esnumber,Externa
 order by EmployeeId
 end
 
-create procedure AllEmployeesNames as
-select distinct EmployeeName from DetailsOfFile
-order by EmployeeName
+alter procedure AllEmployeesNames as
+select distinct EmployeeId,EmployeeName from DetailsOfFile
+order by EmployeeId
 
 alter procedure GettingMissedDates(@EmployeeName varchar(max))as
 begin
@@ -96,8 +96,9 @@ insert into temp_table values(28)
 insert into temp_table values(30)
 insert into temp_table values(31)
 
-create procedure clearall as
-delete from DetailsOfFile 
+alter procedure clearall as
+delete from DetailsOfFile
+delete from catwmisseddates 
 
 
 
@@ -175,6 +176,7 @@ end
 alter procedure PPMclearall as
 begin
 delete from PPMDetailsOfFile
+delete from ppmmisseddates
 end
 select * from PPMDetailsOfFile
 
@@ -184,4 +186,74 @@ as begin
 select ResourceNumber,ResourceName,CAST(DateMentioned as date),SUM(HoursMentioned) from ppmDetailsOfFile
 group by DateMentioned,ResourceName,ResourceNumber
 order by ResourceNumber
+end
+
+alter procedure PPMAllEmployeesNames as
+select distinct ResourceNumber,ResourceName from PPMDetailsOfFile
+order by ResourceNumber
+
+Create procedure PPMGettingMissedDates(@ResourceName varchar(max))as
+begin
+select * from temp_table
+where num not in(
+select distinct RIGHT(cast(DateMentioned as date),2) from PPMDetailsOfFile
+where ResourceName=@ResourceName)
+order by num
+end
+
+
+--create table missingdatesforppmcatw
+--(
+--sno int primary key identity(1,1),
+--EmployeeNumber varchar(max),
+--EmployeeName varchar(max),
+--PPMMissingDates varchar(max),
+--CATWMissingDates varchar(max),
+--)
+
+--drop table missingdatesforppmcatw
+
+--create procedure insertintomissingdatesforppmcatw(@EmployeeNumber varchar(max),@employeeName varchar(max),@PPMMissingDates varchar(max)) as
+--begin
+--insert into missingdatesforppmcatw values(@EmployeeNumber,@EmployeeNumber,@PPMMissingDates,null)
+--end
+
+create table catwmisseddates
+(
+sno int primary key identity(1,1),
+EmployeeNumber varchar(max),
+EmployeeName varchar(max),
+CATWMissingDates varchar(max)
+)
+
+select * from catwmisseddates
+
+create procedure insertintocatwmisseddates(@EmployeeNumber varchar(max),@EmployeeName varchar(max),@CATWMissedDates varchar(max)) as
+begin
+insert into catwmisseddates values(@EmployeeNumber,@EmployeeName,@CATWMissedDates)
+end
+
+create table ppmmisseddates
+(
+sno int primary key identity(1,1),
+EmployeeNumber varchar(max),
+EmployeeName varchar(max),
+ppmMissingDates varchar(max)
+)
+
+select * from ppmmisseddates
+
+create procedure insertintoppmmisseddates(@EmployeeNumber varchar(max),@EmployeeName varchar(max),@CATWMissedDates varchar(max)) as
+begin
+insert into ppmmisseddates values(@EmployeeNumber,@EmployeeName,@CATWMissedDates)
+end
+
+create procedure GettingPPMMissedDates as 
+begin
+select EmployeeNumber,EmployeeName,ppmMissingDates from ppmmisseddates
+end
+
+create procedure GettingCATWMissedDates as 
+begin
+select EmployeeNumber,EmployeeName,catwMissingDates from catwmisseddates
 end
