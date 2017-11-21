@@ -299,8 +299,9 @@ create table CATWtotalHoursFilled(
 sno int primary key identity(1,1),
 EmployeeNumber varchar(max),
 EmployeeName varchar(max),
-TotalHoursForppm float
+TotalHoursForCATW float
 )
+drop table CATWtotalHoursFilled
 select * from CATWtotalHoursFilled
 
 create procedure CATWtotalHoursFilledPerPerson(@EmployeeName varchar(max))as
@@ -316,5 +317,16 @@ insert into CATWtotalHoursFilled values(@EmployeeNumber,@EmployeeName,@TotalHour
 end
 
 
+create procedure GettingPPMHoursFilled(@EmployeeNumber varchar(max))
+as
+begin
+select TotalHoursForppm from PPMtotalHoursFilled
+where EmployeeNumber=@EmployeeNumber
+end
 
-
+create procedure GettingCATWHoursFilled(@EmployeeNumber varchar(max))
+as
+begin
+select TotalHoursForcatw from catwtotalHoursFilled
+where EmployeeNumber=@EmployeeNumber
+end

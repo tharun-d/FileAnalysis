@@ -296,12 +296,14 @@ namespace FileAnalysis.Controllers
             public string EmployeeNumber { get; set; }
             public string EmployeeName { get; set; }
             public string DatesMissed { get; set; }
+            public double HoursFilledInRemainingDays { get; set; }
         }
 
         public ActionResult MissingDatePersons()
         {
 
             List<MissingPersons> list = new List<MissingPersons>();
+            List<MissingPersons> list1 = new List<MissingPersons>();
             // SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");
             SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS; Initial Catalog = FileAnalysis; User ID = sa; Password = Passw0rd@12;");
             Connection.Open();
@@ -319,7 +321,30 @@ namespace FileAnalysis.Controllers
                 list.Add(obj);
 
             }
-            return View(list);
+            Connection.Close();
+            foreach (var item in list)
+            {
+                Connection.Open();
+                SqlCommand Command1 = new SqlCommand("GettingCATWHoursFilled @EmployeeNumber", Connection);
+                Command1.Parameters.AddWithValue("@EmployeeNumber", item.EmployeeNumber);
+                SqlDataReader DataReader1 = Command1.ExecuteReader();
+                while (DataReader1.Read())
+                {
+                    MissingPersons obj1 = new MissingPersons()
+                    {
+                        EmployeeNumber = item.EmployeeNumber,
+                        EmployeeName = item.EmployeeName,
+                        DatesMissed = item.DatesMissed,
+                        HoursFilledInRemainingDays = Convert.ToDouble(DataReader1[0])
+
+                    };
+                    list1.Add(obj1);
+
+                }
+
+            }
+            Connection.Close();
+            return View(list1);
         }
         public ActionResult ClearAll()
         {

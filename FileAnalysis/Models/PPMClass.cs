@@ -45,6 +45,7 @@ namespace FileAnalysis.Models
         public string ResourceNumber { get; set; }
         public string ResourceName { get; set; }
         public string DatesMissed { get; set; }
+        public double HoursFilledInRemainingDays { get; set; }
     }
     public class TotalHoursFilledPerPerson
     {
