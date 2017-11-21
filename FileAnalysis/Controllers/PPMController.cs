@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using ExcelDataReader;
 using System.Data.SqlClient;
+using FileAnalysis.Models;
 
 namespace FileAnalysis.Controllers
 {
@@ -96,6 +97,105 @@ namespace FileAnalysis.Controllers
             }
             return RedirectToAction("GettingAll");
         }
+        //public class GettingDetailsOfFile
+        //{
+        //    public string ProjectNumber { get; set; }
+        //    public string ProjectName { get; set; }
+        //    public string ResourceNumber { get; set; }
+        //    public string ResourceName { get; set; }
+        //    public string TaskName { get; set; }
+        //    public string Summary { get; set; }
+        //    public DateTime DateMentioned { get; set; }
+        //    public double HoursMentioned { get; set; }
+        //    public string ResourceRole { get; set; }
+        //    public string ResourceType { get; set; }
+        //    public string BillingCode { get; set; }
+        //    public double ResourceHourlyRate { get; set; }
+        //    public string ProgrameeProjectManager { get; set; }
+        //    public string AfeDescrimination { get; set; }
+        //    public string ProgrameeGroup { get; set; }
+        //    public string Programee { get; set; }
+        //    public string ProgrameeManager { get; set; }
+        //    public string BussinessLead { get; set; }
+        //    public string UAVP { get; set; }
+        //    public string ITSABuildingCategory { get; set; }
+        //    public string FundingCategory { get; set; }
+        //    public string AFENumber { get; set; }
+        //    public string ServiceCategory { get; set; }
+        //    public string BillingRateOnShore { get; set; }
+        //    public string BillingRateOffShore { get; set; }
+
+        //}
+        public  ActionResult GettingAll()
+        {
+            List<GettingDetailsOfFile> list = new List<GettingDetailsOfFile>();
+
+            // SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");
+            SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS; Initial Catalog = FileAnalysis; User ID = sa; Password = Passw0rd@12;");
+            Connection.Open();
+            SqlCommand Command = new SqlCommand("PPMGettingAll", Connection);
+            SqlDataReader DataReader = Command.ExecuteReader();
+            while (DataReader.Read())
+            {
+                GettingDetailsOfFile Obj = new GettingDetailsOfFile()
+                {
+                    ProjectNumber = Convert.ToString(DataReader[1]),
+                    ProjectName = Convert.ToString(DataReader[2]),
+                    ResourceNumber = Convert.ToString(DataReader[3]),
+                    ResourceName = Convert.ToString(DataReader[4]),
+                    TaskName = Convert.ToString(DataReader[5]),
+                    Summary = Convert.ToString(DataReader[6]),
+                    DateMentioned = Convert.ToDateTime(DataReader[7]),
+                    HoursMentioned = Convert.ToDouble(DataReader[8]),
+                    ResourceRole = Convert.ToString(DataReader[9]),
+                    ResourceType = Convert.ToString(DataReader[10]),
+                    BillingCode = Convert.ToString(DataReader[11]),
+                    ResourceHourlyRate = Convert.ToDouble(DataReader[12]),
+                    ProgrameeProjectManager = Convert.ToString(DataReader[13]),
+                    AfeDescrimination = Convert.ToString(DataReader[14]),
+                    ProgrameeGroup = Convert.ToString(DataReader[15]),
+                    Programee = Convert.ToString(DataReader[16]),
+                    ProgrameeManager = Convert.ToString(DataReader[17]),
+                    BussinessLead = Convert.ToString(DataReader[18]),
+                    UAVP = Convert.ToString(DataReader[19]),
+                    ITSABuildingCategory = Convert.ToString(DataReader[20]),
+                    FundingCategory = Convert.ToString(DataReader[21]),
+                    AFENumber = Convert.ToString(DataReader[22]),
+                    ServiceCategory = Convert.ToString(DataReader[23]),
+                    BillingRateOnShore = Convert.ToString(DataReader[24]),
+                    BillingRateOffShore = Convert.ToString(DataReader[25])
+
+                };
+                list.Add(Obj);
+            }
+            Connection.Close();
+            return View(list);
+        }
+        public ActionResult DayWiseDetails()//total hours per day
+        {
+            List<GettingDetailsOfFile> list = new List<GettingDetailsOfFile>();
+
+            // SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");
+            SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS; Initial Catalog = FileAnalysis; User ID = sa; Password = Passw0rd@12;");
+            Connection.Open();
+            SqlCommand Command = new SqlCommand("ppmdaywisedetails", Connection);
+            SqlDataReader DataReader = Command.ExecuteReader();
+            while (DataReader.Read())
+            {
+                GettingDetailsOfFile Obj = new GettingDetailsOfFile()
+                {
+                    ResourceNumber = Convert.ToString(DataReader[0]),
+                    ResourceName = Convert.ToString(DataReader[1]),
+                    DateMentioned = Convert.ToDateTime(DataReader[2]),
+                    HoursMentioned = Convert.ToDouble(DataReader[3])
+
+                };
+                list.Add(Obj);
+            }
+            Connection.Close();
+            return View(list);
+        }
+
         public ActionResult ClearAll()
         {
             // SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");

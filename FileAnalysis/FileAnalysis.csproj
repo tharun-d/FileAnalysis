@@ -161,6 +161,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\PPMClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -211,10 +212,11 @@
     <Content Include="Views\File\Test.cshtml" />
     <Content Include="Views\Shared\_LayoutPageForPPM.cshtml" />
     <Content Include="Views\PPM\UploadToServer.cshtml" />
+    <Content Include="Views\PPM\GettingAll.cshtml" />
+    <Content Include="Views\PPM\DayWiseDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
     <Folder Include="UploadFiles\" />
   </ItemGroup>
   <ItemGroup>

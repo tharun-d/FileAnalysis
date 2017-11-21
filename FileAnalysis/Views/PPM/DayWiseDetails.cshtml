@@ -1,0 +1,43 @@
+﻿@model IEnumerable<FileAnalysis.Models.GettingDetailsOfFile>
+
+@{
+    ViewBag.Title = "DayWiseDetails";
+    Layout = "~/Views/Shared/_LayoutPageForPPM.cshtml";
+}
+<link href="~/TableStyle.css" rel="stylesheet" />
+<table align="center" border="1">
+    <tr>
+        
+        <th>
+            Resource Number
+        </th>
+        <th>
+            Resource Name
+        </th>
+        <th>
+            Date Mentioned
+        </th>
+        <th>
+            Hours Mentioned
+        </th>
+        
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+       <td>
+            @Html.DisplayFor(modelItem => item.ResourceNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ResourceName)
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.DateMentioned)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HoursMentioned)
+        </td>  
+    </tr>
+}
+
+</table>

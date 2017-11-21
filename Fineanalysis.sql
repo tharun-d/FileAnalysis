@@ -27,7 +27,7 @@ end
 
 alter procedure daywisedetails
 as begin
-select EmployeeId,EmployeeName,ActDate,SUM(HoursMentioned) from DetailsOfFile
+select EmployeeId,EmployeeName,cast(ActDate as date),SUM(HoursMentioned) from DetailsOfFile
 group by ActDate,EmployeeName,EmployeeId
 order by EmployeeId
 end
@@ -35,7 +35,7 @@ end
 
 alter procedure GettingAll
 as begin
-select EmployeeId,EmployeeName,ActDate,ExtProject,Esnumber,ExternalProject,project,Wbs,Attribute,AAtype,ProjectType,HoursMentioned from DetailsOfFile
+select EmployeeId,EmployeeName,cast(ActDate as date),ExtProject,Esnumber,ExternalProject,project,Wbs,Attribute,AAtype,ProjectType,HoursMentioned from DetailsOfFile
 order by EmployeeId
 end
 
@@ -104,25 +104,26 @@ delete from DetailsOfFile
 --From Now PPM
 create table PPMDetailsOfFile
 (
+Sno int primary key identity(1,1),
 ProjectNumber varchar(max),
 ProjectName varchar(max),
 ResourceNumber varchar(max),
 ResourceName varchar(max),
 TaskName varchar(max),
 Summary varchar(max),
-DateMentioned varchar(max),
+DateMentioned datetime,
 HoursMentioned float,
 ResourceRole varchar(max),
 ResourceType varchar(max),
 BillingCode varchar(max),
-ResourceHourlyRate varchar(max),
+ResourceHourlyRate float,
 ProgrameeProjectManager varchar(max),
 AfeDescrimination varchar(max),
 ProgrameeGroup varchar(max),
 Programee varchar(max),
 ProgrameeManager varchar(max),
 BussinessLead varchar(max),
-UAVP varchar(max),
+UAVP varchar(max) null,
 ITSABuildingCategory varchar(max),
 FundingCategory varchar(max),
 AFENumber varchar(max),
@@ -130,3 +131,57 @@ ServiceCategory varchar(max),
 BillingRateOnShore varchar(max),
 BillingRateOffShore varchar(max)
 )
+
+drop table PPMDetailsOfFile
+
+alter procedure insertintoppmdetailsoffile(
+@ProjectNumber varchar(max),
+@ProjectName varchar(max),
+@ResourceNumber varchar(max),
+@ResourceName varchar(max),
+@TaskName varchar(max),
+@Summary varchar(max),
+@DateMentioned datetime,
+@HoursMentioned float,
+@ResourceRole varchar(max),
+@ResourceType varchar(max),
+@BillingCode varchar(max),
+@ResourceHourlyRate float,
+@ProgrameeProjectManager varchar(max),
+@AfeDescrimination varchar(max),
+@ProgrameeGroup varchar(max),
+@Programee varchar(max),
+@ProgrameeManager varchar(max),
+@BussinessLead varchar(max),
+@UAVP varchar(max),
+@ITSABuildingCategory varchar(max),
+@FundingCategory varchar(max),
+@AFENumber varchar(max),
+@ServiceCategory varchar(max),
+@BillingRateOnShore varchar(max),
+@BillingRateOffShore varchar(max)
+) as
+begin 
+insert into PPMdetailsoffile values(
+@ProjectNumber,@ProjectName,@ResourceNumber,@ResourceName,@TaskName,@Summary,@DateMentioned,@HoursMentioned,@ResourceRole,@ResourceType,@BillingCode,@ResourceHourlyRate,@ProgrameeProjectManager,@AfeDescrimination,@ProgrameeGroup,@Programee,@ProgrameeManager,@BussinessLead,@UAVP,@ITSABuildingCategory,@FundingCategory,@AFENumber,@ServiceCategory,@BillingRateOnShore,@BillingRateOffShore
+)
+end
+
+alter procedure PPMGettingAll as
+begin
+select * from PPMDetailsOfFile
+end
+
+alter procedure PPMclearall as
+begin
+delete from PPMDetailsOfFile
+end
+select * from PPMDetailsOfFile
+
+
+alter procedure ppmdaywisedetails
+as begin
+select ResourceNumber,ResourceName,CAST(DateMentioned as date),SUM(HoursMentioned) from ppmDetailsOfFile
+group by DateMentioned,ResourceName,ResourceNumber
+order by ResourceNumber
+end

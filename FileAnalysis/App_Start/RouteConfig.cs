@@ -16,7 +16,7 @@ namespace FileAnalysis
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "PPM", action = "UploadToServer", id = UrlParameter.Optional }
+                defaults: new { controller = "PPM", action = "daywisedetails", id = UrlParameter.Optional }
             );
         }
     }
