@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using ExcelDataReader;
 using System.Data.SqlClient;
 using FileAnalysis.Models;
+using System.Threading.Tasks;
 
 namespace FileAnalysis.Controllers
 {
@@ -17,12 +18,12 @@ namespace FileAnalysis.Controllers
         {
             return View();
         }
-        public ActionResult UploadToServer()
+        public  ActionResult UploadToServer()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult UploadToServer(HttpPostedFileBase file)
+        public ActionResult  UploadToServer(HttpPostedFileBase file)
         {
             ViewBag.Message = null;
             string _path = null;
@@ -93,7 +94,9 @@ namespace FileAnalysis.Controllers
                             con.Close();
                         }
                     }
-                    MissingDates();
+                    
+                      MissingDates();
+                    FillingTotalHours();
                 }
             }
             return RedirectToAction("GettingAll");
@@ -164,6 +167,57 @@ namespace FileAnalysis.Controllers
                 Command2.Parameters.AddWithValue("@EmployeeName", item.ResourceName);
                 Command2.Parameters.AddWithValue("@CATWMissedDates", item.DatesMissed);
                 i = Command2.ExecuteNonQuery();
+                Connection.Close();
+            }
+           
+
+        }
+        public void FillingTotalHours()//fill total hours per month in PPMtotalHoursFilled table
+        {
+            List<GettingAllEmployees> list = new List<GettingAllEmployees>();
+
+            // SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");
+            SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS; Initial Catalog = FileAnalysis; User ID = sa; Password = Passw0rd@12;");
+            Connection.Open();
+            SqlCommand Command = new SqlCommand("PPMAllEmployeesNames", Connection);
+            SqlDataReader DataReader = Command.ExecuteReader();
+            while (DataReader.Read())
+            {
+                GettingAllEmployees obj = new GettingAllEmployees()
+                {
+                    ResourceNumber = Convert.ToString(DataReader[0]),
+                    ResourceName = Convert.ToString(DataReader[1])
+                };
+                list.Add(obj);
+            }
+            Connection.Close();
+            List<TotalHoursFilledPerPerson> list1 = new List<TotalHoursFilledPerPerson>();
+            foreach (var item in list)
+            {
+                Connection.Open();
+                SqlCommand Command1 = new SqlCommand("PPMtotalHoursFilledPerPerson @EmployeeName", Connection);
+                Command1.Parameters.AddWithValue("@EmployeeName",item.ResourceName);
+                SqlDataReader DataReader1 = Command1.ExecuteReader();
+                while (DataReader1.Read())
+                {
+                    TotalHoursFilledPerPerson obj1 = new TotalHoursFilledPerPerson()
+                    {
+                        ResourceNumber=Convert.ToString(DataReader1[0]),
+                        ResourceName = Convert.ToString(DataReader1[1]),
+                        Hours = Convert.ToDouble(DataReader1[2]),
+                    };
+                    list1.Add(obj1);
+                }
+                Connection.Close();
+            }
+            foreach (var item in list1)
+            {
+                Connection.Open();
+                SqlCommand Command2 = new SqlCommand("insertintoPPMtotalHoursFilled @EmployeeNumber,@EmployeeName,@TotalHoursForPPM", Connection);
+                Command2.Parameters.AddWithValue("@EmployeeNumber", item.ResourceNumber);
+                Command2.Parameters.AddWithValue("@EmployeeName", item.ResourceName);
+                Command2.Parameters.AddWithValue("@TotalHoursForPPM", item.Hours);
+                Command2.ExecuteNonQuery();
                 Connection.Close();
             }
 

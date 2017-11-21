@@ -97,9 +97,11 @@ insert into temp_table values(30)
 insert into temp_table values(31)
 
 alter procedure clearall as
+begin
 delete from DetailsOfFile
 delete from catwmisseddates 
-
+delete from PPMtotalHoursFilled
+end
 
 
 --From Now PPM
@@ -177,7 +179,9 @@ alter procedure PPMclearall as
 begin
 delete from PPMDetailsOfFile
 delete from ppmmisseddates
+delete from PPMtotalHoursFilled
 end
+
 select * from PPMDetailsOfFile
 
 
@@ -267,3 +271,50 @@ inner join catwmisseddates c
 on p.EmployeeNumber=c.EmployeeNumber
 order by p.EmployeeNumber
 end
+
+
+
+create table PPMtotalHoursFilled(
+sno int primary key identity(1,1),
+EmployeeNumber varchar(max),
+EmployeeName varchar(max),
+TotalHoursForppm float
+)
+select * from PPMtotalHoursFilled
+
+alter procedure PPMtotalHoursFilledPerPerson(@EmployeeName varchar(max))as
+begin
+select ResourceNumber,ResourceName,sum(HoursMentioned) from PPMDetailsOfFile 
+where ResourceName=@EmployeeName
+group by ResourceNumber,ResourceName
+end
+
+create procedure insertintoPPMtotalHoursFilled(@EmployeeNumber varchar(max),@EmployeeName varchar(max),@TotalHoursForPPM varchar(max))as
+begin
+insert into PPMtotalHoursFilled values(@EmployeeNumber,@EmployeeName,@TotalHoursForPPM)
+end
+
+
+create table CATWtotalHoursFilled(
+sno int primary key identity(1,1),
+EmployeeNumber varchar(max),
+EmployeeName varchar(max),
+TotalHoursForppm float
+)
+select * from CATWtotalHoursFilled
+
+create procedure CATWtotalHoursFilledPerPerson(@EmployeeName varchar(max))as
+begin
+select EmployeeId,EmployeeName,sum(HoursMentioned) from DetailsOfFile 
+where EmployeeName=@EmployeeName
+group by EmployeeId,EmployeeName
+end
+
+create procedure insertintoCATWtotalHoursFilled(@EmployeeNumber varchar(max),@EmployeeName varchar(max),@TotalHoursForCATW varchar(max))as
+begin
+insert into CATWtotalHoursFilled values(@EmployeeNumber,@EmployeeName,@TotalHoursForCATW)
+end
+
+
+
+
