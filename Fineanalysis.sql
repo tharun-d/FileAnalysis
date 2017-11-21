@@ -257,3 +257,13 @@ create procedure GettingCATWMissedDates as
 begin
 select EmployeeNumber,EmployeeName,catwMissingDates from catwmisseddates
 end
+
+
+
+create procedure gettingMissedDatesOfPPMandCATW as
+begin
+select p.EmployeeNumber,p.EmployeeName,p.ppmMissingDates,c.catwMissingDates from ppmmisseddates p 
+inner join catwmisseddates c 
+on p.EmployeeNumber=c.EmployeeNumber
+order by p.EmployeeNumber
+end

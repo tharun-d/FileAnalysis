@@ -153,6 +153,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AnalysisController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PPMController.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Analysis.cs" />
     <Compile Include="Models\PPMClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -215,6 +217,8 @@
     <Content Include="Views\PPM\GettingAll.cshtml" />
     <Content Include="Views\PPM\DayWiseDetails.cshtml" />
     <Content Include="Views\PPM\MissingDatePersons.cshtml" />
+    <Content Include="Views\Shared\_LayoutPageForAnalysis.cshtml" />
+    <Content Include="Views\Analysis\MissedDates.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

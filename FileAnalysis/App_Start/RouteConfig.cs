@@ -16,7 +16,7 @@ namespace FileAnalysis
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "PPM", action = "MissingDatePersons", id = UrlParameter.Optional }
+                defaults: new { controller = "Analysis", action = "MissedDates", id = UrlParameter.Optional }
             );
         }
     }

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<FileAnalysis.Models.MissedDatesForPPMandCATW>
+
+@{
+    ViewBag.Title = "Missed Dates";
+    Layout = "~/Views/Shared/_LayoutPageForAnalysis.cshtml";
+}
+
+
+
+<table align="center" border="1">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DatesMissedForPPM)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DatesMissedForCATW)
+        </th>
+        
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DatesMissedForPPM)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DatesMissedForCATW)
+        </td>
+        
+    </tr>
+}
+
+</table>
