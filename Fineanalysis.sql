@@ -98,3 +98,35 @@ insert into temp_table values(31)
 
 create procedure clearall as
 delete from DetailsOfFile 
+
+
+
+--From Now PPM
+create table PPMDetailsOfFile
+(
+ProjectNumber varchar(max),
+ProjectName varchar(max),
+ResourceNumber varchar(max),
+ResourceName varchar(max),
+TaskName varchar(max),
+Summary varchar(max),
+DateMentioned varchar(max),
+HoursMentioned float,
+ResourceRole varchar(max),
+ResourceType varchar(max),
+BillingCode varchar(max),
+ResourceHourlyRate varchar(max),
+ProgrameeProjectManager varchar(max),
+AfeDescrimination varchar(max),
+ProgrameeGroup varchar(max),
+Programee varchar(max),
+ProgrameeManager varchar(max),
+BussinessLead varchar(max),
+UAVP varchar(max),
+ITSABuildingCategory varchar(max),
+FundingCategory varchar(max),
+AFENumber varchar(max),
+ServiceCategory varchar(max),
+BillingRateOnShore varchar(max),
+BillingRateOffShore varchar(max)
+)
