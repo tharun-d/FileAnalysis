@@ -1,0 +1,64 @@
+﻿@model IEnumerable<FileAnalysis.Models.GettingFinalDifferences>
+
+@{
+    ViewBag.Title = "FinalDifferences";
+    Layout = "~/Views/Shared/_LayoutPageForAnalysis.cshtml";
+}
+
+
+<link href="~/TableStyle.css" rel="stylesheet" />
+
+<table align="center" border="1">
+    <tr>
+        <th>
+            Employee Number
+        </th>
+        <th>
+            Employee Name
+        </th>
+        <th>
+            Dates Missed For PPM
+        </th>
+        <th>
+            Dates Missed For CATW
+        </th>
+        <th>
+            Total Hours For PPM
+        </th>
+        <th>
+            Total Hours For CATW
+        </th>
+        <th>
+            Difference
+        </th>
+        
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DatesMissedForPPM)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DatesMissedForCATW)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalHoursForPPM)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalHoursForCATW)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Difference)
+        </td>
+       
+    </tr>
+}
+
+</table>

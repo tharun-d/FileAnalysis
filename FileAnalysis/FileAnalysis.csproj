@@ -219,6 +219,7 @@
     <Content Include="Views\PPM\MissingDatePersons.cshtml" />
     <Content Include="Views\Shared\_LayoutPageForAnalysis.cshtml" />
     <Content Include="Views\Analysis\MissedDates.cshtml" />
+    <Content Include="Views\Analysis\FinalDifferences.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

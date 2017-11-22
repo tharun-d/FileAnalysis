@@ -330,3 +330,13 @@ begin
 select TotalHoursForcatw from catwtotalHoursFilled
 where EmployeeNumber=@EmployeeNumber
 end
+
+create procedure GettingFinalDifferences as
+begin
+select p.EmployeeNumber,p.EmployeeName,p.ppmMissingDates,c.CATWMissingDates,pt.TotalHoursForppm,ct.TotalHoursForCATW,(ct.TotalHoursForCATW-pt.TotalHoursForppm) as difference
+from ppmmisseddates p inner join PPMtotalHoursFilled pt
+on p.EmployeeNumber=pt.EmployeeNumber inner join catwmisseddates c 
+on pt.EmployeeNumber=c.EmployeeNumber inner join CATWtotalHoursFilled ct
+on c.EmployeeNumber=ct.EmployeeNumber
+order by p.EmployeeNumber
+end

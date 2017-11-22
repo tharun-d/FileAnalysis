@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PPM @ViewBag.Title</title>
+    <title>Analysis @ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -20,11 +20,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("PPM Upload File", "UploadToServer", "PPM")</li>
-                    <li>@Html.ActionLink("PPM Getting ALL", "GettingALL", "PPM")</li>
-                    <li>@Html.ActionLink("PPM Day Wise Details", "DayWiseDetails", "PPM")</li>
-                    <li>@Html.ActionLink("PPM Missing Date Persons", "MissingDatePersons", "PPM")</li>
-                    <li>@Html.ActionLink("PPM Clear ALL", "ClearALL", "PPM")</li>
+                    <li>@Html.ActionLink("Final Differences", "FinalDifferences", "Analysis")</li>
+                    <li>@Html.ActionLink("Missed Dates", "MissedDates", "Analysis")</li>
+                    <li>@Html.ActionLink("GO To PPM", "UploadToServer", "PPM")</li>
                     <li>@Html.ActionLink("GO To CATW", "UploadToServer", "File")</li>
                 </ul>
             </div>

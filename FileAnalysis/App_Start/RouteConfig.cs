@@ -16,7 +16,7 @@ namespace FileAnalysis
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "File", action = "UploadToServer", id = UrlParameter.Optional }
+                defaults: new { controller = "Analysis", action = "FinalDifferences", id = UrlParameter.Optional }
             );
         }
     }
