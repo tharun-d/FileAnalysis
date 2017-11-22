@@ -100,7 +100,7 @@ alter procedure clearall as
 begin
 delete from DetailsOfFile
 delete from catwmisseddates 
-delete from PPMtotalHoursFilled
+delete from catwtotalHoursFilled
 end
 
 

@@ -202,7 +202,7 @@ namespace FileAnalysis.Controllers
             // SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS;Integrated Security=sspi;database=FileAnalysis");
             SqlConnection Connection = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS; Initial Catalog = FileAnalysis; User ID = sa; Password = Passw0rd@12;");
             Connection.Open();
-            SqlCommand Command = new SqlCommand("PPMAllEmployeesNames", Connection);
+            SqlCommand Command = new SqlCommand("AllEmployeesNames", Connection);
             SqlDataReader DataReader = Command.ExecuteReader();
             while (DataReader.Read())
             {
@@ -324,8 +324,9 @@ namespace FileAnalysis.Controllers
             Connection.Close();
             foreach (var item in list)
             {
-                Connection.Open();
-                SqlCommand Command1 = new SqlCommand("GettingCATWHoursFilled @EmployeeNumber", Connection);
+                SqlConnection Connection1 = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS; Initial Catalog = FileAnalysis; User ID = sa; Password = Passw0rd@12;");
+                Connection1.Open();
+                SqlCommand Command1 = new SqlCommand("GettingCATWHoursFilled @EmployeeNumber", Connection1);
                 Command1.Parameters.AddWithValue("@EmployeeNumber", item.EmployeeNumber);
                 SqlDataReader DataReader1 = Command1.ExecuteReader();
                 while (DataReader1.Read())
@@ -341,9 +342,9 @@ namespace FileAnalysis.Controllers
                     list1.Add(obj1);
 
                 }
-
+                Connection1.Close();
             }
-            Connection.Close();
+            
             return View(list1);
         }
         public ActionResult ClearAll()

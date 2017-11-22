@@ -162,10 +162,10 @@ namespace FileAnalysis.Controllers
             {
                 int i;
                 Connection.Open();
-                SqlCommand Command2 = new SqlCommand("insertintoppmmisseddates @EmployeeNumber,@EmployeeName,@CATWMissedDates", Connection);
+                SqlCommand Command2 = new SqlCommand("insertintoppmmisseddates @EmployeeNumber,@EmployeeName,@PPMMissedDates", Connection);
                 Command2.Parameters.AddWithValue("@EmployeeNumber", item.ResourceNumber);
                 Command2.Parameters.AddWithValue("@EmployeeName", item.ResourceName);
-                Command2.Parameters.AddWithValue("@CATWMissedDates", item.DatesMissed);
+                Command2.Parameters.AddWithValue("@PPMMissedDates", item.DatesMissed);
                 i = Command2.ExecuteNonQuery();
                 Connection.Close();
             }
@@ -319,8 +319,9 @@ namespace FileAnalysis.Controllers
             Connection.Close();
             foreach (var item in list)
             {
-                Connection.Open();
-                SqlCommand Command1 = new SqlCommand("GettingPPMHoursFilled @EmployeeNumber", Connection);
+                SqlConnection Connection1 = new SqlConnection("Server=WIN-P2S8E7IH0S7\\SQLEXPRESS; Initial Catalog = FileAnalysis; User ID = sa; Password = Passw0rd@12;");
+                Connection1.Open();
+                SqlCommand Command1 = new SqlCommand("GettingPPMHoursFilled @EmployeeNumber", Connection1);
                 Command1.Parameters.AddWithValue("@EmployeeNumber", item.ResourceNumber);
                 SqlDataReader DataReader1 = Command1.ExecuteReader();
                 while (DataReader1.Read())
@@ -336,9 +337,9 @@ namespace FileAnalysis.Controllers
                     list1.Add(obj1);
 
                 }
-
+                Connection1.Close();
             }
-            Connection.Close();
+            
             return View(list1);
         }
         public ActionResult ClearAll()
